@@ -1,0 +1,591 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		FB86C4EE2DF2AAB2004118DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB86C4D82DF2AAB0004118DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB86C4DF2DF2AAB0004118DB;
+			remoteInfo = LiDARStream;
+		};
+		FB86C4F82DF2AAB2004118DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB86C4D82DF2AAB0004118DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB86C4DF2DF2AAB0004118DB;
+			remoteInfo = LiDARStream;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FB86C4E02DF2AAB0004118DB /* RXStream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RXStream.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB86C4ED2DF2AAB2004118DB /* RXStreamTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RXStreamTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB86C4F72DF2AAB2004118DB /* RXStreamUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RXStreamUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		FB09EC902E83C4D000B31A8F /* Exceptions for "RXStream" folder in "RXStream" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ARViewContainer.swift,
+				Assets.xcassets,
+				ContentView.swift,
+				CRC32.swift,
+				Depth/DepthEncoder.swift,
+				Depth/DepthWireFormat.swift,
+				FRAMEWORKS.MD,
+				IMU/IMUEncoder.swift,
+				IMU/IMUSample.swift,
+				IMU/IMUWireFormat.swift,
+				LICENSE,
+				LiDARStreamApp.swift,
+				Networking/FrameProtocol.swift,
+				Networking/TCPSender.swift,
+				Networking/UDPFramer.swift,
+				Networking/UDPSender.swift,
+				README.md,
+				RGB/RGBEncoder.swift,
+				RGB/RGBWireFormat.swift,
+			);
+			target = FB86C4DF2DF2AAB0004118DB /* RXStream */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		FB09EC312E83C49300B31A8F /* RXStreamTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RXStreamTests;
+			sourceTree = "<group>";
+		};
+		FB09EC342E83C49300B31A8F /* RXStreamUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RXStreamUITests;
+			sourceTree = "<group>";
+		};
+		FB09EC7C2E83C4D000B31A8F /* RXStream */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FB09EC902E83C4D000B31A8F /* Exceptions for "RXStream" folder in "RXStream" target */,
+			);
+			path = RXStream;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FB86C4DD2DF2AAB0004118DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB86C4EA2DF2AAB2004118DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB86C4F42DF2AAB2004118DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FB86C4D72DF2AAB0004118DB = {
+			isa = PBXGroup;
+			children = (
+				FB09EC7C2E83C4D000B31A8F /* RXStream */,
+				FB09EC312E83C49300B31A8F /* RXStreamTests */,
+				FB09EC342E83C49300B31A8F /* RXStreamUITests */,
+				FB86C4E12DF2AAB0004118DB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FB86C4E12DF2AAB0004118DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FB86C4E02DF2AAB0004118DB /* RXStream.app */,
+				FB86C4ED2DF2AAB2004118DB /* RXStreamTests.xctest */,
+				FB86C4F72DF2AAB2004118DB /* RXStreamUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FB86C4DF2DF2AAB0004118DB /* RXStream */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB86C5012DF2AAB2004118DB /* Build configuration list for PBXNativeTarget "RXStream" */;
+			buildPhases = (
+				FB86C4DC2DF2AAB0004118DB /* Sources */,
+				FB86C4DD2DF2AAB0004118DB /* Frameworks */,
+				FB86C4DE2DF2AAB0004118DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RXStream;
+			packageProductDependencies = (
+			);
+			productName = LiDARStream;
+			productReference = FB86C4E02DF2AAB0004118DB /* RXStream.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FB86C4EC2DF2AAB2004118DB /* RXStreamTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB86C5042DF2AAB2004118DB /* Build configuration list for PBXNativeTarget "RXStreamTests" */;
+			buildPhases = (
+				FB86C4E92DF2AAB2004118DB /* Sources */,
+				FB86C4EA2DF2AAB2004118DB /* Frameworks */,
+				FB86C4EB2DF2AAB2004118DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FB86C4EF2DF2AAB2004118DB /* PBXTargetDependency */,
+			);
+			name = RXStreamTests;
+			packageProductDependencies = (
+			);
+			productName = LiDARStreamTests;
+			productReference = FB86C4ED2DF2AAB2004118DB /* RXStreamTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FB86C4F62DF2AAB2004118DB /* RXStreamUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB86C5072DF2AAB2004118DB /* Build configuration list for PBXNativeTarget "RXStreamUITests" */;
+			buildPhases = (
+				FB86C4F32DF2AAB2004118DB /* Sources */,
+				FB86C4F42DF2AAB2004118DB /* Frameworks */,
+				FB86C4F52DF2AAB2004118DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FB86C4F92DF2AAB2004118DB /* PBXTargetDependency */,
+			);
+			name = RXStreamUITests;
+			packageProductDependencies = (
+			);
+			productName = LiDARStreamUITests;
+			productReference = FB86C4F72DF2AAB2004118DB /* RXStreamUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FB86C4D82DF2AAB0004118DB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					FB86C4DF2DF2AAB0004118DB = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					FB86C4EC2DF2AAB2004118DB = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = FB86C4DF2DF2AAB0004118DB;
+					};
+					FB86C4F62DF2AAB2004118DB = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = FB86C4DF2DF2AAB0004118DB;
+					};
+				};
+			};
+			buildConfigurationList = FB86C4DB2DF2AAB0004118DB /* Build configuration list for PBXProject "RXStream" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FB86C4D72DF2AAB0004118DB;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = FB86C4E12DF2AAB0004118DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FB86C4DF2DF2AAB0004118DB /* RXStream */,
+				FB86C4EC2DF2AAB2004118DB /* RXStreamTests */,
+				FB86C4F62DF2AAB2004118DB /* RXStreamUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FB86C4DE2DF2AAB0004118DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB86C4EB2DF2AAB2004118DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB86C4F52DF2AAB2004118DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FB86C4DC2DF2AAB0004118DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB86C4E92DF2AAB2004118DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB86C4F32DF2AAB2004118DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FB86C4EF2DF2AAB2004118DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB86C4DF2DF2AAB0004118DB /* RXStream */;
+			targetProxy = FB86C4EE2DF2AAB2004118DB /* PBXContainerItemProxy */;
+		};
+		FB86C4F92DF2AAB2004118DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB86C4DF2DF2AAB0004118DB /* RXStream */;
+			targetProxy = FB86C4F82DF2AAB2004118DB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FB86C4FF2DF2AAB2004118DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = H44SWN4864;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FB86C5002DF2AAB2004118DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H44SWN4864;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FB86C5022DF2AAB2004118DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H44SWN4864;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Need Camera to stream LiDAR data";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.louis.LiDARStream;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FB86C5032DF2AAB2004118DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H44SWN4864;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Need Camera to stream LiDAR data";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.louis.LiDARStream;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FB86C5052DF2AAB2004118DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H44SWN4864;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vsn.LiDARStreamTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiDARStream.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LiDARStream";
+			};
+			name = Debug;
+		};
+		FB86C5062DF2AAB2004118DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H44SWN4864;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vsn.LiDARStreamTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiDARStream.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LiDARStream";
+			};
+			name = Release;
+		};
+		FB86C5082DF2AAB2004118DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H44SWN4864;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vsn.LiDARStreamUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LiDARStream;
+			};
+			name = Debug;
+		};
+		FB86C5092DF2AAB2004118DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H44SWN4864;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vsn.LiDARStreamUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LiDARStream;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FB86C4DB2DF2AAB0004118DB /* Build configuration list for PBXProject "RXStream" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB86C4FF2DF2AAB2004118DB /* Debug */,
+				FB86C5002DF2AAB2004118DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB86C5012DF2AAB2004118DB /* Build configuration list for PBXNativeTarget "RXStream" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB86C5022DF2AAB2004118DB /* Debug */,
+				FB86C5032DF2AAB2004118DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB86C5042DF2AAB2004118DB /* Build configuration list for PBXNativeTarget "RXStreamTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB86C5052DF2AAB2004118DB /* Debug */,
+				FB86C5062DF2AAB2004118DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB86C5072DF2AAB2004118DB /* Build configuration list for PBXNativeTarget "RXStreamUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB86C5082DF2AAB2004118DB /* Debug */,
+				FB86C5092DF2AAB2004118DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FB86C4D82DF2AAB0004118DB /* Project object */;
+}
