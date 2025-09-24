@@ -5,4 +5,10 @@ DerivedData/
 # User-specific settings
 *.xcuserstate
 *.xcuserdata/
+*.xcworkspace
+*.xcuserdatad/
+*.xcsettings
+*.plist
+
+# macOS cruft
 .DS_Store
