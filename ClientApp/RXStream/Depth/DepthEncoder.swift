@@ -1,22 +1,3 @@
-//
-//  DepthEncoder.swift
-//  LiDARStream
-//  Grabs ARKit’s depth (and optional confidence), copies rows into tightly packed buffers, builds the DepthHeader, computes CRC-32, and returns EncodedDepth { frameId, data }
-//  and returns one Data packet ready for TCP or a large payload you can chunk for UDP
-//  Created by Louis Mamon on 9/8/25.
-//
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
-
 // TODO: Optionally downsample depth map before sending to reduce bandwidth.
 // TODO: Consider compressing depth map (e.g., zlib) for smaller payload size.
 
