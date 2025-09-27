@@ -1,21 +1,4 @@
-//
-//  UdpFramer.swift
-//  LiDARStream
-//  Robust UDP chunking with frameId and 16-bit chunk counters (so big frames don’t break).
-//  Created by Louis Mamon on 9/8/25.
-//
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
-
+// Robust UDP chunking with frameId and 16-bit chunk counters (so big frames don’t break).
 // TODO: Add reassembly utility on the receiver side (mirror of makeChunks).
 // TODO: Support FEC or retransmission strategy for high packet loss networks.
 
