@@ -16,8 +16,8 @@ extension UIApplication {
 
 struct ContentView: View {
     @State private var ipAddress = ""
-    @State private var udpPort = ""
-    @State private var tcpPort = ""
+    @State private var udpPort: Int? = nil
+    @State private var tcpPort: Int? = nil
     
     @State private var sendDepth = false
     @State private var sendRGB = false
@@ -26,31 +26,58 @@ struct ContentView: View {
     @State private var showRGBPreview = false
     @State private var isStreaming = false
     
+    private var isValidConfig: Bool {
+        !ipAddress.isEmpty && (udpPort ?? 0) > 0 && (tcpPort ?? 0) > 0
+    }
+    
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 //top preview
-                ZStack(alignment: .topTrailing) {
-                    ARViewContainer(destinationIP: ipAddress,
-                                    destinationPort: UInt16(udpPort) ?? 0,
-                                    tcpPort: UInt16(tcpPort) ?? 0,
-                                    sendDepth: $sendDepth,
-                                    sendRGB: $sendRGB,
-                                    sendIMU: $sendIMU,
-                                    isStreaming: $isStreaming,
-                                    showRGBPreview: $showRGBPreview)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
-                    Button(action: { showRGBPreview.toggle() }) {
-                        Image(systemName: "arrow.triangle.2.circlepath.camera")
-                            .padding(10)
-                            .background(.black.opacity(0.6))
-                            .clipShape(Circle())
-                            .foregroundStyle(.white)
+                ZStack {
+                        ARViewContainer(destinationIP: ipAddress,
+                                        destinationPort: UInt16(udpPort ?? 0),
+                                        tcpPort: UInt16(tcpPort ?? 0),
+                                        sendDepth: $sendDepth,
+                                        sendRGB: $sendRGB,
+                                        sendIMU: $sendIMU,
+                                        isStreaming: $isStreaming,
+                                        showRGBPreview: $showRGBPreview)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                if !isValidConfig {
+                    VStack {
+                        Text("Enter IP + Ports, then press Start Streaming")
+                            .font(.footnote)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 6)
+                            .background(
+                                Capsule()
+                                    .fill(Color.black.opacity(0.6))
+                                    .blur(radius: 1)
+                            )
+                            .padding(.top, 12)
+                            .transition(.opacity)
+                            .animation(.easeInOut, value: isValidConfig)
+                        Spacer()
                     }
-                    .padding()
                 }
-                .frame(maxWidth: .infinity)
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button(action: { showRGBPreview.toggle() }) {
+                            Image(systemName: "arrow.triangle.2.circlepath.camera")
+                                .padding(10)
+                                .background(.black.opacity(0.6))
+                                .clipShape(Circle())
+                                .foregroundStyle(.white)
+                        }
+                        .padding()
+                    }
+                        Spacer()
+                    
+                    }
+                }
                 
                 //bottom half
                 VStack(spacing: 15) {
@@ -64,11 +91,11 @@ struct ContentView: View {
                         .keyboardType(.numbersAndPunctuation)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    TextField("UDP Port", text: $udpPort)
+                    TextField("UDP Port", value: $udpPort, formatter: NumberFormatter())
                         .keyboardType(.numberPad)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    TextField("TCP Port", text: $tcpPort)
+                    TextField("TCP Port", value: $tcpPort, formatter: NumberFormatter())
                         .keyboardType(.numberPad)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     
@@ -84,6 +111,7 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
+                    .disabled(!isValidConfig)
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 12)
