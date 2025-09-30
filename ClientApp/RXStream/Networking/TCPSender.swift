@@ -8,10 +8,14 @@ import Network
 class TCPSender: FrameProtocol {
     private var connection: NWConnection
     private var queue = DispatchQueue(label: "TCP Sender Queue")
+    private let host: String
+    private let port: UInt16
     
-    ///host: IP string of your Mac
-    ///port: port number you'll use on your Python UDP server
+    ///host: IP string of your console
+    ///port: port number used on UDP server
     init (host: String, port: UInt16) {
+        self.host = host
+        self.port = port
         let nwHost = NWEndpoint.Host(host)
         let nwPort = NWEndpoint.Port(rawValue: port)!
         connection = NWConnection(host: nwHost, port: nwPort, using: .tcp)
@@ -25,13 +29,16 @@ class TCPSender: FrameProtocol {
                 break
             }
         }
-        connection.start(queue:queue)
+        connection.start(queue: queue)
     }
     
     func send(data: Data) {
-        connection.send(content: data, completion: .contentProcessed{error in
-            if let err = error {
-                print("TCP send failed: \(err)")
+        print(" TCP queued \(data.count) bytes to \(host):\(port)")
+        connection.send(content: data, completion: .contentProcessed { error in
+            if let error = error {
+                print("TCP send error: \(error)")
+            } else {
+                print("TCP packet sent (\(data.count) bytes)")
             }
         })
     }
