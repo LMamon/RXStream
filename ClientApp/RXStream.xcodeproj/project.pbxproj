@@ -43,13 +43,11 @@
 				IMU/IMUEncoder.swift,
 				IMU/IMUSample.swift,
 				IMU/IMUWireFormat.swift,
-				LICENSE,
 				LiDARStreamApp.swift,
 				Networking/FrameProtocol.swift,
 				Networking/TCPSender.swift,
 				Networking/UDPFramer.swift,
 				Networking/UDPSender.swift,
-				README.md,
 				RGB/RGBEncoder.swift,
 				RGB/RGBWireFormat.swift,
 			);
@@ -344,6 +342,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSMotionUsageDescription = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -403,6 +402,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSMotionUsageDescription = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -424,7 +424,9 @@
 				DEVELOPMENT_TEAM = H44SWN4864;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Need Camera to stream LiDAR data";
+				INFOPLIST_FILE = RXStream/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Need camera to stream LiDAR + RGB data";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Need motion data to stream IMU samples";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -454,7 +456,9 @@
 				DEVELOPMENT_TEAM = H44SWN4864;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Need Camera to stream LiDAR data";
+				INFOPLIST_FILE = RXStream/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Need camera to stream LiDAR + RGB data";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Need motion data to stream IMU samples";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
