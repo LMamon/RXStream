@@ -8,20 +8,34 @@ import Network
 class UDPSender: FrameProtocol {
     private var connection: NWConnection
     private var queue = DispatchQueue(label: "UDP Sender Queue")
+    private let host: String
+    private let port: UInt16
     
-    ///host: IP string of your Mac
-    ///port: port number you'll use on your Python UDP server
+    ///host: IP string of your IP
+    ///port: port number used on UDP server
     init(host: String, port: UInt16) {
+        self.host = host
+        self.port = port
         let endpointHost = NWEndpoint.Host(host)
         let endpointPort = NWEndpoint.Port(rawValue: port)!
         connection = NWConnection(host: endpointHost, port: endpointPort, using: .udp)
-        connection.start(queue: .main)
+        connection.stateUpdateHandler = { state in
+                switch state {
+                case .ready: print("UDP ready to \(host):\(port)")
+                case .failed(let err): print("UDP failed: \(err)")
+                default: break
+                }
+            }
+        connection.start(queue: queue)
     }
     
     func send(data: Data) {
+        print(" UDP queued \(data.count) bytes to \(host):\(port)")
         connection.send(content: data, completion: .contentProcessed { error in
-                if let error = error {
-                print("Error sending: \(error)")
+            if let error = error {
+                print("UDP send error: \(error)")
+            } else {
+                print("UDP packet sent (\(data.count) bytes)")
             }
         })
     }
