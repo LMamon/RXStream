@@ -25,7 +25,7 @@ enum IMUMode {
 final class IMUEncoder {
     private let motionManager = CMMotionManager()
     private let altimeter = CMAltimeter()
-    private var nextFrameId: UInt32 = 0
+    private var frameId: UInt32 = 0
     
     //storage for latest sensor values
     private var latestMotion: CMDeviceMotion?
@@ -36,10 +36,18 @@ final class IMUEncoder {
     
     init(mode: IMUMode = .fused) {
         self.mode = mode
+
+            motionManager.startDeviceMotionUpdates(to: .main) { motion, error in
+                if let m = motion {
+                    self.latestMotion = m
+                    print("motion update received: \(m)")
+                } else if let err = error {
+                    print("motion error: \(err)")
+                }
+            }
     }
     
     //MARK: Control
-    
     func start() {
         guard !isRunning else { return }
         isRunning = true
@@ -84,13 +92,13 @@ final class IMUEncoder {
         
         switch mode {
         case .fused:
-            //Quaternion (fused attitude)
+            //quaternion (fused attitude)
             let q = motion.attitude.quaternion
             let quatVals: [Float32] = [Float32(q.w), Float32(q.x), Float32(q.y), Float32(q.z)]
             payload.append(contentsOf: quatVals.withUnsafeBufferPointer {Data(buffer: $0) })
             flags.insert([.isFused, .hasQuat])
             
-            //(user acceleration)
+            //user acceleration
             let acc = motion.userAcceleration
             let accVals: [Float32] = [Float32(acc.x), Float32(acc.y), Float(acc.z)]
             payload.append(contentsOf: accVals.withUnsafeBufferPointer { Data(buffer: $0) })
@@ -150,13 +158,13 @@ final class IMUEncoder {
                                version: IMUWireVersion.current,
                                flags: flags,
                                timestampSeconds: motion.timestamp,
-                               frameId: nextFrameId,
+                               frameId: frameId,
                                payloadBytes: UInt32(payload.count),
                                crc32: crc)
         
         let fullData = header.toData() + payload
-        let encoded = EncodedIMU(frameId: nextFrameId, data: fullData)
-        nextFrameId &+= 1
+        let encoded = EncodedIMU(frameId: frameId, data: fullData)
+        frameId &+= 1
         return encoded
     }
 }
