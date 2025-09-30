@@ -14,11 +14,11 @@ struct ARViewContainer: UIViewRepresentable {
     let destinationPort: UInt16
     let tcpPort: UInt16
     
-        @Binding var sendDepth: Bool
-        @Binding var sendRGB: Bool
-        @Binding var sendIMU: Bool
-        @Binding var isStreaming: Bool
-        @Binding var showRGBPreview: Bool
+    @Binding var sendDepth: Bool
+    @Binding var sendRGB: Bool
+    @Binding var sendIMU: Bool
+    @Binding var isStreaming: Bool
+    @Binding var showRGBPreview: Bool
     
     func makeUIView(context: Context) -> ARSCNView {
         let arView = ARSCNView(frame: .zero)
@@ -30,6 +30,7 @@ struct ARViewContainer: UIViewRepresentable {
         let config = ARWorldTrackingConfiguration()
         if ARWorldTrackingConfiguration.supportsFrameSemantics(.sceneDepth) {
             config.frameSemantics.insert(.sceneDepth)
+            config.frameSemantics.insert(.smoothedSceneDepth)
         }
     
         arView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
@@ -54,11 +55,22 @@ struct ARViewContainer: UIViewRepresentable {
         context.coordinator.previewRGB = sendRGB
         //context.coordinator.previewMode = showRGBPreview ? .rgb : .depth
         
-        if sendDepth == false && sendRGB == false { context.coordinator.previewMode = .none
-            } else if showRGBPreview {
+        if !sendDepth && !sendRGB {
+                context.coordinator.previewMode = .none
+            } else if sendRGB && sendDepth {
+                context.coordinator.previewMode = showRGBPreview ? .rgb : .depth
+            } else if sendRGB {
                 context.coordinator.previewMode = .rgb
-            } else {
+            } else if sendDepth {
                 context.coordinator.previewMode = .depth
+            }
+        
+        if isStreaming, !destinationIP.isEmpty {
+                context.coordinator.updateConnection(
+                    ip: destinationIP,
+                    udpPort: destinationPort,
+                    tcpPort: tcpPort
+                )
             }
     }
     
@@ -75,13 +87,17 @@ struct ARViewContainer: UIViewRepresentable {
     }
     
     class Coordinator: NSObject, ARSessionDelegate {
+        
         private var udpSender: FrameProtocol?
         private var tcpSender: FrameProtocol?
         
-        //Encoders
+        //encoders
         private let depthEncoder = DepthEncoder()
         private let rgbEncoder = RGBEncoder(jpegQuality: 0.7)
         private let imuEncoder = IMUEncoder()
+        private let encodeQueue = DispatchQueue(label: "rx.encode.queue", qos: .userInitiated)
+        private var isEncoding = false
+        private var hasPrintedDidUpdate = false
         
         var sendDepth = false
         var sendRGB = false
@@ -98,62 +114,109 @@ struct ARViewContainer: UIViewRepresentable {
         //initialize with user input
         init(ip: String, udpPort: UInt16, tcpPort: UInt16) {
             super.init()
-            self.udpSender = UDPSender(host: ip, port: udpPort)
-            self.tcpSender = TCPSender(host: ip, port: tcpPort)
-            
+            if !ip.isEmpty && udpPort > 0 {
+                    self.udpSender = UDPSender(host: ip, port: udpPort)
+                }
+                if !ip.isEmpty && tcpPort > 0 {
+                    self.tcpSender = TCPSender(host: ip, port: tcpPort)
+                }
         }
         
+        func updateConnection(ip: String, udpPort: UInt16, tcpPort: UInt16) {
+            if udpPort > 0 {
+                self.udpSender = UDPSender(host: ip, port: udpPort)
+            }
+            if tcpPort > 0 {
+                self.tcpSender = TCPSender(host: ip, port: tcpPort)
+            }
+        }
         
         func session(_ session: ARSession, didUpdate frame: ARFrame) {
-            if isStreaming {
-                //Depth
-                if sendDepth, let depthEndoded = depthEncoder.makePacket(from: frame) {
-                    sendFrameUDP(depthEndoded.data, frameId: depthEndoded.frameId)
-                }
-                
-                //RGB
-                if sendRGB, let rgbEncoded = rgbEncoder.makePacket(from: frame) {
-                    sendFrameUDP(rgbEncoded.data, frameId: 0)
-                }
-                
-                //IMU
-                if sendIMU, let imuEncoded = imuEncoder.makePacket() {
-                    sendFrameUDP(imuEncoded.data, frameId: imuEncoded.frameId)
-                }
+            if !hasPrintedDidUpdate {
+                        print("ARSession didUpdate called")
+                    hasPrintedDidUpdate = true
             }
             
+            guard !isEncoding else { return }
+            isEncoding = true
+
+            //extract what we need immediately
+            let depthMap = frame.sceneDepth?.depthMap
+            let confidenceMap = frame.sceneDepth?.confidenceMap
+            let timestamp = frame.timestamp
+            let intrinsics = frame.camera.intrinsics
+            let transform = frame.camera.transform
+            let capturedImage = frame.capturedImage
             
-            let rgbOn = previewRGB
-            let depthOn = previewDepth
             
-            //preview rendering
-            switch previewMode {
-            case .rgb:
-                if rgbOn{
-                    showRGBPreview()
-                } else if depthOn {
-                    self.showDepthPreview(from: frame)
+            encodeQueue.async { [weak self] in
+                guard let self = self else { return }
+                defer { self.isEncoding = false }
+
+            // Depth
+            if self.sendDepth, let dm = depthMap {
+                    if let depthEncoded = self.depthEncoder.makePacket(
+                        depthMap: dm,
+                        confidenceMap: confidenceMap,
+                        timestamp: timestamp,
+                        intrinsics: intrinsics,
+                        cameraTransform: transform
+                    ) {
+                        self.sendFrameUDP(depthEncoded.data, frameId: depthEncoded.frameId)
+                        print("Depth frame \(depthEncoded.frameId) sent (\(CVPixelBufferGetWidth(dm))×\(CVPixelBufferGetHeight(dm)))")
+                    }
+                }
+
+                // RGB
+                if self.sendRGB {
+                        if let rgbEncoded = self.rgbEncoder.makePacket(
+                            capturedImage: capturedImage,
+                            timestamp: timestamp
+                        ) {
+                            self.sendFrameUDP(rgbEncoded.data, frameId: 0)
+                            print("RGB frame \(rgbEncoded.frameId) sent (\(CVPixelBufferGetWidth(capturedImage))×\(CVPixelBufferGetHeight(capturedImage)))")
+                        }
+                    }
+
+                // IMU
+                if self.sendIMU {
+                    imuEncoder.start()
+                    if let imuEncoded = self.imuEncoder.makePacket() {
+                        self.sendFrameUDP(imuEncoded.data, frameId: imuEncoded.frameId)
+                        print("IMU sent (frameId: \(imuEncoded.frameId))")
+                    }
                 } else {
-                    self.showBlankPreview()
+                    imuEncoder.stop()
                 }
                 
-            case .depth:
-                if depthOn {
-                    self.showDepthPreview(from: frame)
-                } else if rgbOn {
-                    showRGBPreview()
-                } else {
-                    self.showBlankPreview()
-                }
-            case .none:
-                showBlankPreview()
+            }
+
+            //update preview on UI thread
+            updatePreview(depthMap: depthMap, capturedImage: capturedImage)
+        }
+        
+        //MARK: preview helper
+        private func updatePreview(depthMap: CVPixelBuffer?, capturedImage: CVPixelBuffer) {
+            switch previewMode {
+                case .rgb:
+                    showRGBPreview(from: capturedImage)
+                case .depth:
+                    if let dm = depthMap {
+                        showDepthPreview(from: dm)
+                    } else {
+                        showBlankPreview()
+                    }
+                case .none:
+                    showBlankPreview()
             }
         }
+        
         
         
         //MARK: UDP frame transmitter
         
         private func sendFrameUDP(_ data: Data, frameId: UInt32) {
+            guard isStreaming else { return }
             for chunk in UdpChunk.makeChunks(frameId: frameId,
                                              payload: data,
                                              maxUDPPayload: 1400) {
@@ -163,30 +226,34 @@ struct ARViewContainer: UIViewRepresentable {
         
         //MARK: TCP control channel
         func sendControlMessage(_ message: String) {
-            guard let data = message.data(using: .utf8) else { return }
+            guard isStreaming,
+                  let data = message.data(using: .utf8) else { return }
             tcpSender?.send(data: data)
         }
         
         // MARK: - Preview helpers
-        private func showRGBPreview() {
-            DispatchQueue.main.async {
-                self.overlayView?.isHidden = false
-                self.overlayView?.backgroundColor = .clear
-                self.overlayView?.image = nil
+        private func showRGBPreview(from capturedImage: CVPixelBuffer) {
+            let ci = ciContext ?? CIContext() // reuse if available
+                let ciImage = CIImage(cvPixelBuffer: capturedImage)
+                if let cgImage = ci.createCGImage(ciImage, from: ciImage.extent) {
+                    DispatchQueue.main.async {
+                        self.overlayView?.image = UIImage(cgImage: cgImage, scale: 1, orientation: .right)
+                        self.overlayView?.isHidden = false
+                        self.overlayView?.backgroundColor = .clear
+                    }
             }
         }
         
-        private func showDepthPreview(from frame: ARFrame) {
-            if let depthMap = frame.sceneDepth?.depthMap,
-                  let cgImage = makeGrayscaleImage(from: depthMap) {
+        private func showDepthPreview(from depthMap: CVPixelBuffer) {
+            if let cgImage = makeGrayscaleImage(from: depthMap) {
+                
                     DispatchQueue.main.async {
                         self.overlayView?.isHidden = false
                         self.overlayView?.backgroundColor = .clear
                         self.overlayView?.image = UIImage(cgImage: cgImage)
                     }
-                }
             }
-        
+        }
         
         public func showBlankPreview() {
             DispatchQueue.main.async {
@@ -194,7 +261,7 @@ struct ARViewContainer: UIViewRepresentable {
                 self.overlayView?.backgroundColor = .clear
                 self.overlayView?.image = nil
             }
-        }
+       }
         
         
         //MARK: depth > grayscale CIImage
