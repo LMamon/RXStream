@@ -11,29 +11,30 @@ struct EncodedDepth {
 }
 
 final class DepthEncoder {
-    private var nextFrameId: UInt32 = 0
+    private var frameId: UInt32 = 0
     
     //Returns a single wire packet: [header][depthPayload][confPayload?]
-    func makePacket(from frame: ARFrame) -> EncodedDepth? {
-        guard let sceneDepth = frame.sceneDepth else { return nil}
-        let depthPB = sceneDepth.depthMap
-        let confPB = sceneDepth.confidenceMap //may be nil on some devices
+    func makePacket(depthMap: CVPixelBuffer,
+                        confidenceMap: CVPixelBuffer?,
+                        timestamp: TimeInterval,
+                        intrinsics: simd_float3x3,
+                        cameraTransform: simd_float4x4) -> EncodedDepth? {
         
         //validate expected format
-        guard CVPixelBufferGetPixelFormatType(depthPB) == kCVPixelFormatType_DepthFloat32 else { return nil }
+        guard CVPixelBufferGetPixelFormatType(depthMap) == kCVPixelFormatType_DepthFloat32 else { return nil }
         
         //lock, copy to tightly packed bufffers
-        CVPixelBufferLockBaseAddress(depthPB, .readOnly)
-        defer { CVPixelBufferUnlockBaseAddress(depthPB, .readOnly) }
+        CVPixelBufferLockBaseAddress(depthMap, .readOnly)
+        defer { CVPixelBufferUnlockBaseAddress(depthMap, .readOnly) }
         
-        let w = CVPixelBufferGetWidth(depthPB)
-        let h = CVPixelBufferGetHeight(depthPB)
+        let w = CVPixelBufferGetWidth(depthMap)
+        let h = CVPixelBufferGetHeight(depthMap)
         
-        let srcBPR = CVPixelBufferGetBytesPerRow(depthPB)
+        let srcBPR = CVPixelBufferGetBytesPerRow(depthMap)
         let dstBPR = w * MemoryLayout<Float32>.size //tight stride
         let depthPackedSize = dstBPR * h
         
-        guard let srcBase = CVPixelBufferGetBaseAddress(depthPB) else { return nil }
+        guard let srcBase = CVPixelBufferGetBaseAddress(depthMap) else { return nil }
         
         var depthPacked = Data(count: depthPackedSize)
         depthPacked.withUnsafeMutableBytes { dstBuf in
@@ -48,7 +49,9 @@ final class DepthEncoder {
         //Confidence (optional): pack tightly as width*1 per row (UInt8)
         var confPacked = Data()
         var flags: DepthFlags = []
-        if let confPB, CVPixelBufferGetPixelFormatType(confPB) == kCVPixelFormatType_OneComponent8 {
+        if let confPB = confidenceMap,
+            CVPixelBufferGetPixelFormatType(confPB) == kCVPixelFormatType_OneComponent8 {
+            
             CVPixelBufferLockBaseAddress(confPB, .readOnly)
             let cw = CVPixelBufferGetWidth(confPB)
             let ch = CVPixelBufferGetHeight(confPB)
@@ -84,10 +87,10 @@ final class DepthEncoder {
                     height: UInt16(h),
                     bytesPerRowPacked: UInt32(dstBPR),
                     pixelFormat: UInt32(kCVPixelFormatType_DepthFloat32),
-                    timestampSeconds: frame.timestamp,
-                    frameId: nextFrameId,
-                    intrinsics: frame.camera.intrinsics,
-                    cameraTransform: frame.camera.transform,
+                    timestampSeconds: timestamp,
+                    frameId: frameId,
+                    intrinsics: intrinsics,
+                    cameraTransform: cameraTransform,
                     depthPayloadBytes: UInt32(depthPacked.count),
                     confPayloadBytes: UInt32(confPacked.count),
                     crc32: crc
@@ -95,8 +98,8 @@ final class DepthEncoder {
 
         
                 let fullData = header.toData() + depthPacked + confPacked
-                let encoded = EncodedDepth(frameId: nextFrameId, data: fullData)
-                nextFrameId &+= 1
+                let encoded = EncodedDepth(frameId: frameId, data: fullData)
+                frameId &+= 1
                 return encoded
     }
 }
